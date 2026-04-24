@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        margin: 20px;
+    }
+    h1{
+        color: #2c3e50;
+    }
+    </style>
+</head>
+<body>
+    <h1>RENDA DO MÊS</h1>
+    <label for="gastos">Digite seus gastos do mês</label>
+    <input type="text" name="gastos" id="gastos" placeholder="gastos">
+    <button id="confirmar">confirmar</button>
+    <div id="resultGastos"></div>
+
+    <p></p>
+    <label for="entrada"> digite suas entradas do mês</label>
+    <input type="text" name="entrada" id="entrada" placeholder="entradas">
+    <button id="confirmarEntrada">confirmar entradas</button>
+<div id="resultEntrada"></div>
+
+<p></p>
+
+<button id="calcularRenda">calcular renda</button>
+<div id="renda mensal"></div>
+
+<script>
+    let gastos = document.getElementById("gastos")
+    let botao = document.getElementById("confirmar")
+    let resultadoGastos = document.getElementById("resultGastos")
+
+    function verificarGastos(){
+        let valorGastos = gastos.value
+        resultadoGastos.innerHTML = "Seus gastos do mês são: " + valorGastos
+    }
+
+    botao.addEventListener("click", verificarGastos)
+
+    let entrada = document.getElementById("entrada")
+    let botaoEntrada = document.getElementById("confirmarEntrada")
+    let resultadoEntrada = document.getElementById("resultEntrada")
+
+    function verificarEntrada(){
+        let valorEntrada = entrada.value
+        resultadoEntrada.innerHTML = "Suas entradas do mês são: " + valorEntrada
+    }
+
+    botaoEntrada.addEventListener("click", verificarEntrada)
+
+    let rendaMensal = document.getElementById("renda mensal")
+    let botaoCalcularRenda = document.getElementById("calcularRenda")
+
+    function calcularRenda(){
+        let valorGastos = parseFloat(gastos.value)
+        let valorEntrada = parseFloat(entrada.value)
+        let renda = valorEntrada - valorGastos
+        rendaMensal.innerHTML = "Sua renda mensal é: " + renda
+    
+        if(renda < 0){
+            alert("Você está com déficit mensal de: " + Math.abs(renda))
+        }
+    }
+    botaoCalcularRenda.addEventListener("click", calcularRenda)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candieiro Restaurante | Cardápio Digital</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fdfcf9; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-position: center;
+        }
+
+        .category-link.active {
+            color: #d97706;
+            border-left: 4px solid #d97706!important;
+            background-color: #fffbeb;
+        }
+
+        html { scroll-behavior: smooth; }
+        section { scroll-margin-top: 100px; }
+
+        .badge-destaque {
+            background: #d97706;
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .badge-delivery {
+            background: #0ea5e9;
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .badge-encomenda {
+            background: #7c3aed;
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
+        .category-link {
+            display: block;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #78716c;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .category-link:hover {
+            color: #b45309;
+            background: #fffbeb;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold tracking-tighter text-amber-700 font-serif leading-none">CANDIEIRO</h1>
+            <span class="text-[10px] uppercase tracking-[3px] text-stone-500">Restaurante</span>
+        </div>
+        <div class="hidden md:flex space-x-8 font-medium text-stone-600">
+            <a href="#inicio" class="hover:text-amber-600 transition">Início</a>
+            <a href="#cardapio" class="hover:text-amber-600 transition">Cardápio</a>
+            <a href="https://www.instagram.com/candieirorestaurante_/" target="_blank" class="bg-amber-600 text-white px-5 py-2 rounded-full hover:bg-amber-700 transition">Contato</a>        </div>
+    </nav>
+
+    <section id="inicio" class="hero-bg h-[50vh] flex items-center justify-center text-center text-white px-4">
+        <div>
+            <h2 class="text-5xl md:text-6xl font-serif mb-4 italic">Tradição & Sabor</h2>
+            <p class="text-lg md:text-xl font-light text-stone-200">O melhor da culinária brasileira na sua mesa.</p>
+        </div>
+    </section>
+
+    <main id="cardapio" class="max-w-7xl mx-auto py-16 px-6 grid md:grid-cols-4 gap-12">
+        
+        <aside class="md:col-span-1">
+            <div class="sticky top-28 space-y-1">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-4">Categorias</h3>
+                <nav id="category-nav"></nav>
+            </div>
+        </aside>
+
+        <div class="md:col-span-3 space-y-16" id="menu-sections"></div>
+    </main>
+
+    <footer class="bg-stone-900 text-white py-12 text-center">
+        <p class="font-serif text-xl mb-2">CANDIEIRO</p>
+        <p class="text-stone-500 text-sm">© 2026 - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+    const cardapioData = [
+      {
+        titulo: "Prato do Dia",
+        itens: [
+          { nome: "Moqueca ao Molho de Camarão", preco: "R$ 149,00", desc: "Acompanha arroz branco e pirão.", destaque: true }
+        ]
+      },
+      {
+        titulo: "Entradas",
+        itens: [
+          { nome: "Antepasto de Berinjela", preco: "R$ 32,00", desc: "" },
+          { nome: "Bolinho de Abóbora c/ Carne Seca", preco: "R$ 48,90", desc: "12 unidades." },
+          { nome: "Bolinho de Abóbora c/ Carne Seca", preco: "R$ 34,00", desc: "6 unidades." },
+          { nome: "Mini Pastéis (12 unid.)", preco: "R$ 32,00", desc: "Carne ou queijo." },
+          { nome: "Mini Pastéis (6 unid.)", preco: "R$ 22,00", desc: "Carne ou queijo." },
+          { nome: "Patê da Casa + 2 Pães", preco: "R$ 12,00", desc: "" }
+        ]
+      },
+      {
+        titulo: "Saladas",
+        itens: [
+          { nome: "Salada Simples", preco: "R$ 26,00", desc: "Alface, tomate, cebola e cenoura." },
+          { nome: "Salada de Palmito", preco: "R$ 48,00", desc: "Palmito, alface e tomate." },
+          { nome: "Salada de Rúcula", preco: "R$ 15,00", desc: "Rúcula picada e alho frito." },
+          { nome: "Salada Completa", preco: "R$ 62,00", desc: "Alface, rúcula, tomate, cebola, cenoura, brócolis, ovo cozido, presunto, queijo, ervilha, milho, palmito e azeitonas verdes." }
+        ]
+      },
+      {
+        titulo: "Pratos Executivos",
+        itens: [
+          { nome: "Contra Filé", preco: "R$ 36,00", desc: "Contra filé grelhado, arroz branco, feijão, fritas, farofa e vinagrete." },
+          { nome: "Contra Filé a Cavalo", preco: "R$ 38,50", desc: "Contra filé grelhado, arroz branco, feijão, fritas, ovo frito, farofa e vinagrete." },
+          { nome: "Filé de Frango Grelhado", preco: "R$ 28,00", desc: "Acompanha arroz, feijão, fritas, farofa e vinagrete." },
+          { nome: "Filé de Frango à Milanesa", preco: "R$ 38,00", desc: "Filé de frango empanado, arroz branco, banana frita, abacaxi e fritas." },
+          { nome: "Filé de Frango Colorido", preco: "R$ 36,00", desc: "Filé de frango grelhado, arroz à grega e legumes na manteiga." },
+          { nome: "Filé Mignon Grill", preco: "R$ 42,00", desc: "Filé mignon grelhado, arroz branco, feijão e fritas." },
+          { nome: "Filé Mignon à Milanesa", preco: "R$ 44,90", desc: "Acompanha arroz branco e legumes." },
+          { nome: "Parmegiana de Filé Mignon", preco: "R$ 56,00", desc: "Filé mignon empanado coberto com mussarela e molho de tomate, arroz branco e fritas." },
+          { nome: "Parmegiana de Contra Filé", preco: "R$ 44,00", desc: "Bife empanado coberto com mussarela e molho de tomate, arroz branco e fritas." },
+          { nome: "Parmegiana de Frango", preco: "R$ 36,00", desc: "Filé de frango empanado coberto com mussarela e molho de tomate, arroz branco e fritas." },
+          { nome: "Picanha Nacional", preco: "R$ 58,90", desc: "Picanha grelhada, arroz, fritas, farofa e vinagrete." },
+          { nome: "Filé de Peixe Grelhado", preco: "R$ 42,00", desc: "Acompanha arroz branco e legumes na manteiga." },
+          { nome: "Filé de Peixe à Milanesa", preco: "R$ 48,00", desc: "Acompanha arroz à grega e fritas." },
+          { nome: "Salmão ao Molho de Alcaparras", preco: "R$ 62,90", desc: "Salmão grelhado ao molho de alcaparras e champignon, arroz branco e legumes no azeite." },
+          { nome: "Parmegiana de Tilápia", preco: "R$ 47,00", desc: "Peixe empanado coberto com mussarela e molho de tomate, arroz branco e fritas." },
+          { nome: "Omelete com Legumes e Bacon", preco: "R$ 34,00", desc: "Ovos, legumes (cenoura, brócolis, ervilha, tomate, cebola), presunto, mussarela e bacon. Acompanha arroz à grega e mandioca frita." },
+          { nome: "Baião Individual", preco: "R$ 38,00", desc: "Calabresa, bacon, carne seca, tomate, cebola, arroz, feijão fradinho, queijo coalho e banana à milanesa." }
+        ]
+      },
+      {
+        titulo: "Marmitas — Somente Delivery",
+        delivery: true,
+        itens: [
+          { nome: "Contra Filé", preco: "R$ 26,00", desc: "Contra filé grelhado, arroz branco, feijão e a escolher: fritas ou legumes.", delivery: true },
+          { nome: "Filé de Frango Grelhado", preco: "R$ 24,00", desc: "Filé de frango grelhado, arroz branco, feijão e a escolher: fritas ou legumes.", delivery: true },
+          { nome: "Parmegiana de Contra Filé", preco: "R$ 29,00", desc: "Contra filé empanado coberto com mussarela e molho de tomate, arroz branco e fritas.", delivery: true },
+          { nome: "Parmegiana de Filé de Frango", preco: "R$ 26,00", desc: "Frango empanado coberto com mussarela e molho de tomate, arroz branco e fritas.", delivery: true },
+          { nome: "Calabresa", preco: "R$ 22,00", desc: "Acompanha arroz, feijão e a escolher: fritas ou legumes.", delivery: true },
+          { nome: "Frango a Passarinho", preco: "R$ 22,00", desc: "Acompanha arroz, feijão e a escolher: fritas ou legumes.", delivery: true },
+          { nome: "Filé de Peixe à Milanesa", preco: "R$ 26,00", desc: "Acompanha arroz, feijão e a escolher: fritas ou legumes.", delivery: true },
+          { nome: "Panqueca de Carne Moída", preco: "R$ 22,00", desc: "1 unid. de panqueca, acompanha arroz, feijão e a escolher: fritas ou legumes.", delivery: true }
+        ]
+      },
+      {
+        titulo: "Massas",
+        itens: [
+          { nome: "Espaguete (Individual)", preco: "R$ 29,90", desc: "" },
+          { nome: "Lasanha de Presunto e Mussarela", preco: "R$ 42,00", desc: "" },
+          { nome: "Nhoque", preco: "R$ 32,00", desc: "" },
+          { nome: "Panqueca de Carne", preco: "R$ 32,00", desc: "2 panquecas." },
+          { nome: "Panqueca de Brócolis c/ Catupiry", preco: "R$ 32,00", desc: "2 panquecas." },
+          { nome: "Panqueca de Presunto e Queijo", preco: "R$ 32,00", desc: "2 panquecas." },
+          { nome: "Panqueca de Frango c/ Catupiry", preco: "R$ 32,00", desc: "2 panquecas." },
+          { nome: "Panqueca de Carne Seca c/ Catupiry", preco: "R$ 38,90", desc: "2 panquecas." }
+        ]
+      },
+      {
+        titulo: "Carnes",
+        itens: [
+          { nome: "Curva de Rio (2 pessoas)", preco: "R$ 92,00", desc: "Filé mignon grelhado com molho madeira, requeijão, tomate, bacon, brócolis, champignon, alcaparras, arroz branco e mandioca frita." },
+          { nome: "Curva de Rio (3 pessoas)", preco: "R$ 150,00", desc: "Filé mignon grelhado com molho madeira, requeijão, tomate, bacon, brócolis, champignon, alcaparras, arroz branco e mandioca frita." },
+          { nome: "Filé Mignon à Parmegiana", preco: "R$ 128,00", desc: "Filé mignon coberto com mussarela e molho de tomate, arroz e fritas." },
+          { nome: "Contra Filé à Brasileira", preco: "R$ 72,50", desc: "Contra filé grelhado, arroz branco, banana à milanesa, farofa e fritas." },
+          { nome: "Contra Filé à Brasileira (3 pessoas)", preco: "R$ 99,90", desc: "Contra filé grelhado, arroz branco, banana à milanesa, farofa e fritas." },
+          { nome: "Filé Mignon à Cubana (2 pessoas)", preco: "R$ 106,90", desc: "Filé mignon à milanesa, arroz à grega, fritas, banana e abacaxi à milanesa." },
+          { nome: "Filé Mignon à Cubana (3 pessoas)", preco: "R$ 149,00", desc: "Filé mignon à milanesa, arroz à grega, fritas, banana e abacaxi à milanesa." },
+          { nome: "Picanha à Moda Tropeiro (2–3 pessoas)", preco: "R$ 168,00", desc: "4 bifes de picanha grelhada com alho frito, arroz branco, feijão tropeiro, banana à milanesa e fritas." },
+          { nome: "Picanha Simples (2–3 pessoas)", preco: "R$ 98,90", desc: "Picanha em tiras grelhada, arroz branco, fritas, farofa e vinagrete." }
+        ]
+      },
+      {
+        titulo: "Frangos",
+        itens: [
+          { nome: "Filé de Frango à Parmegiana (2 pessoas)", preco: "R$ 78,90", desc: "Filé de frango à milanesa coberto de mussarela, molho de tomate, arroz branco e fritas." },
+          { nome: "Filé de Frango à Cubana (2 pessoas)", preco: "R$ 82,90", desc: "Filé de frango à milanesa, banana à milanesa, abacaxi, fritas e arroz à grega." },
+          { nome: "Filé de Frango à Cubana (3 pessoas)", preco: "R$ 120,00", desc: "Filé de frango à milanesa, banana à milanesa, abacaxi, fritas e arroz à grega." }
+        ]
+      },
+      {
+        titulo: "Pratos Especiais",
+        itens: [
+          { nome: "Arrumadinho (até 3 pessoas)", preco: "R$ 108,90", desc: "Arroz, feijão fradinho, carne seca, bacon, calabresa e queijo coalho." },
+          { nome: "Escondidinho de Carne Seca (2 pessoas)", preco: "R$ 92,00", desc: "Carne seca desfiada com purê de mandioca, arroz branco e fritas." },
+          { nome: "Baião de Dois (até 3 pessoas)", preco: "R$ 108,90", desc: "Arroz branco, bacon, calabresa, carne seca, tomate, cebola, queijo coalho, feijão fradinho e banana à milanesa." },
+          { nome: "Strogonoff de Mignon", preco: "R$ 49,00", desc: "Acompanha arroz branco e batata palha." },
+          { nome: "Strogonoff de Mignon (2 pessoas)", preco: "R$ 89,00", desc: "Acompanha arroz branco e batata palha." },
+          { nome: "Strogonoff de Frango", preco: "R$ 36,00", desc: "Acompanha arroz branco e batata palha." },
+          { nome: "Strogonoff de Frango (2 pessoas)", preco: "R$ 69,00", desc: "Acompanha arroz branco e batata palha." },
+          { nome: "Filé Candieiro (6 pessoas)", preco: "R$ 258,00", desc: "Filé mignon e filé de frango grelhados, cobertos com mussarela, cenoura, ervilha, brócolis, palmito, champignon refogados na manteiga, abacaxi, pêssego e banana à milanesa. Arroz branco, mandioca frita e creme de milho.", destaque: true },
+          { nome: "Picanha do Chef (4 pessoas)", preco: "R$ 247,00", desc: "7 bifes de picanha grelhada, arroz branco, mandioca frita, farofa, vinagrete e salada de rúcula com alho." },
+          { nome: "Picanha do Chef Carreteiro (4 pessoas)", preco: "R$ 284,00", desc: "7 bifes de picanha grelhada, arroz carreteiro, mandioca frita, farofa, vinagrete e salada de rúcula com alho." },
+          { nome: "Carne Seca na Moranga", preco: "R$ 185,00", desc: "Acompanha arroz branco e batata palha. Encomendar com 1 dia de antecedência.", encomenda: true },
+          { nome: "Camarão na Moranga", preco: "R$ 205,00", desc: "Acompanha arroz branco e batata palha. Encomendar com 1 dia de antecedência.", encomenda: true }
+        ]
+      },
+      {
+        titulo: "Porções",
+        itens: [
+          { nome: "Batata Frita", preco: "R$ 29,90", desc: "" },
+          { nome: "Batata Frita com Cheddar e Bacon", preco: "R$ 38,90", desc: "" },
+          { nome: "Carne Seca c/ Mandioca (2 pessoas)", preco: "R$ 92,90", desc: "" },
+          { nome: "Calabresa Acebolada", preco: "R$ 38,90", desc: "" },
+          { nome: "Costelinha Suína — 1 kg", preco: "R$ 55,90", desc: "" },
+          { nome: "Contra Filé Acebolado", preco: "R$ 69,90", desc: "" },
+          { nome: "Frango a Passarinho", preco: "R$ 38,90", desc: "" },
+          { nome: "Isca de Frango Grelhada 500g", preco: "R$ 42,00", desc: "Grelhada com cebola, pimentão amarelo e pimentão vermelho." },
+          { nome: "Isca de Frango Empanado c/ Catupiry", preco: "R$ 38,90", desc: "" },
+          { nome: "Isca de Peixe (Tilápia à Milanesa 400g)", preco: "R$ 58,90", desc: "" },
+          { nome: "Mandioca Frita (Macaxeira)", preco: "R$ 29,90", desc: "" },
+          { nome: "Torresmo", preco: "R$ 36,00", desc: "" },
+          { nome: "Picanha c/ Fritas", preco: "R$ 98,00", desc: "Nacional. Acompanha farofa e vinagrete." },
+          { nome: "Tulipinha de Frango", preco: "R$ 48,90", desc: "" },
+          { nome: "Salame 100g", preco: "R$ 38,00", desc: "" },
+          { nome: "Mussarela 350g", preco: "R$ 29,00", desc: "" },
+          { nome: "Frios", preco: "R$ 62,00", desc: "Salame, presunto, mussarela, queijo prato, azeitonas e cebolinha." },
+          { nome: "Bolinho de Abóbora c/ Carne Seca (12 unid.)", preco: "R$ 48,90", desc: "" }
+        ]
+      },
+      {
+        titulo: "Guarnições e Adicionais",
+        itens: [
+          { nome: "Arroz Branco (até 3 pessoas)", preco: "R$ 14,00", desc: "" },
+          { nome: "Arroz à Grega (até 3 pessoas)", preco: "R$ 25,00", desc: "" },
+          { nome: "Arroz Carreteiro (até 3 pessoas)", preco: "R$ 48,00", desc: "Tomate, cebola, carne seca refogada na manteiga de garrafa e arroz branco." },
+          { nome: "Feijão Tropeiro (até 3 pessoas)", preco: "R$ 48,00", desc: "Calabresa, bacon, ovos refogados na manteiga de garrafa, feijão fradinho e farofa." },
+          { nome: "Feijão Caseiro", preco: "R$ 10,00", desc: "" },
+          { nome: "Picanha (Bife — 1 unid.)", preco: "R$ 26,00", desc: "" },
+          { nome: "Contra Filé (Bife — 1 unid.)", preco: "R$ 19,00", desc: "" },
+          { nome: "Filé Mignon (Bife — 1 unid.)", preco: "R$ 24,00", desc: "" },
+          { nome: "Filé de Frango (1 unid.)", preco: "R$ 15,00", desc: "" },
+          { nome: "Parmegiana Mignon (Bife — 1 unid.)", preco: "R$ 38,00", desc: "" },
+          { nome: "Parmegiana Frango (Bife — 1 unid.)", preco: "R$ 24,00", desc: "" },
+          { nome: "Omelete", preco: "R$ 22,00", desc: "2 ovos, queijo, presunto, tomate, cebola e salsinha." },
+          { nome: "Banana à Milanesa", preco: "R$ 15,00", desc: "3 bananas (6 pedaços)." },
+          { nome: "Farofa", preco: "R$ 10,00", desc: "" },
+          { nome: "Vinagrete", preco: "R$ 10,00", desc: "" },
+          { nome: "Ovo Frito (1 unid.)", preco: "R$ 3,00", desc: "" },
+          { nome: "Parmesão Ralado", preco: "R$ 10,00", desc: "" },
+          { nome: "Creme de Milho", preco: "R$ 15,00", desc: "" },
+          { nome: "Salada Executiva", preco: "R$ 8,00", desc: "Alface, tomate e cebola." },
+          { nome: "Purê de Batata", preco: "R$ 20,00", desc: "" },
+          { nome: "Legumes na Manteiga", preco: "R$ 28,00", desc: "" }
+        ]
+      },
+      {
+        titulo: "Sobremesas",
+        itens: [
+          { nome: "Petit Gateau de Chocolate", preco: "R$ 26,90", desc: "Acompanha 2 bolas de sorvete de creme com calda de chocolate." },
+          { nome: "Creme de Mamão Papaia", preco: "R$ 22,00", desc: "" },
+          { nome: "Frutas Flambadas", preco: "R$ 24,00", desc: "Fruta flambada com manteiga, calda caramelada e conhaque Domecq, sobre sorvete de creme." },
+          { nome: "Pudim de Leite Condensado", preco: "R$ 12,00", desc: "" },
+          { nome: "Brownie", preco: "R$ 22,00", desc: "1 bola de sorvete de creme e calda de chocolate." }
+        ]
+      },
+      {
+        titulo: "Sucos",
+        itens: [
+          { nome: "Suco de Laranja", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Laranja c/ Abacaxi", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Abacaxi", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Laranja c/ Maracujá", preco: "R$ 12,00", desc: "Suco natural de laranja com polpa de maracujá." },
+          { nome: "Suco de Laranja c/ Mamão", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Laranja c/ Morango", preco: "R$ 12,00", desc: "Suco natural de laranja com polpa de morango." },
+          { nome: "Suco de Limão", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Limão c/ Abacaxi", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Maracujá", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Suco de Morango", preco: "R$ 12,00", desc: "Suco natural." },
+          { nome: "Limonada Suíça", preco: "R$ 16,00", desc: "Suco natural — já vem com leite." },
+          { nome: "Suco de Goiaba", preco: "R$ 12,00", desc: "Natural." },
+          { nome: "Suco de Abacaxi c/ Hortelã", preco: "R$ 10,00", desc: "Polpa." },
+          { nome: "Suco de Acerola", preco: "R$ 10,00", desc: "Polpa." },
+          { nome: "Suco de Manga", preco: "R$ 10,00", desc: "Polpa." },
+          { nome: "Suco de Uva", preco: "R$ 10,00", desc: "Polpa." },
+          { nome: "Suco de Coco", preco: "R$ 10,00", desc: "Polpa." }
+        ]
+      },
+      {
+        titulo: "Refrigerantes e Água",
+        itens: [
+          { nome: "Água 500ml", preco: "R$ 5,00", desc: "" },
+          { nome: "Água c/ Gás 500ml", preco: "R$ 6,00", desc: "" },
+          { nome: "H2O Limoneto 500ml", preco: "R$ 8,00", desc: "" },
+          { nome: "H2O Limão 500ml", preco: "R$ 8,00", desc: "" },
+          { nome: "Coca-Cola Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Coca-Cola Zero Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Coca-Cola 1 Litro", preco: "R$ 14,00", desc: "" },
+          { nome: "Coca-Cola KS 290ml", preco: "R$ 6,00", desc: "" },
+          { nome: "Fanta Laranja Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Fanta Uva Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Guaraná Antártica Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Guaraná Antártica Zero Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Guaraná Antártica 600ml", preco: "R$ 10,00", desc: "" },
+          { nome: "Guaraná Antártica 1 Litro", preco: "R$ 14,00", desc: "" },
+          { nome: "Soda Limonada Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Tônica Antártica Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Citrus Schweppes Lata 350ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Itubaína Retrô 335ml", preco: "R$ 7,50", desc: "" },
+          { nome: "Red Bull Energy Drink 250ml", preco: "R$ 15,00", desc: "" }
+        ]
+      },
+      {
+        titulo: "Cervejas",
+        itens: [
+          { nome: "Heineken Long Neck 330ml", preco: "R$ 12,00", desc: "" },
+          { nome: "Heineken 0% Álcool Long Neck 330ml", preco: "R$ 12,00", desc: "" },
+          { nome: "Stella Artois Long Neck 330ml", preco: "R$ 12,00", desc: "" },
+          { nome: "Skol Garrafa 600ml", preco: "R$ 12,00", desc: "Somente servida nas mesas." },
+          { nome: "Original Garrafa 600ml", preco: "R$ 16,00", desc: "Somente servida nas mesas." },
+          { nome: "Stella Artois Garrafa 600ml", preco: "R$ 16,00", desc: "Somente servida nas mesas." },
+          { nome: "Heineken Garrafa 600ml", preco: "R$ 18,50", desc: "Somente servida nas mesas." },
+          { nome: "Spaten Garrafa 600ml", preco: "R$ 16,00", desc: "Somente servida nas mesas." },
+          { nome: "Eisenbahn Garrafa 600ml", preco: "R$ 14,00", desc: "Somente servida nas mesas." },
+          { nome: "Balde c/ 4 Original 600ml", preco: "R$ 59,90", desc: "Somente servida nas mesas." },
+          { nome: "Balde c/ 4 Spaten 600ml", preco: "R$ 59,90", desc: "Somente servida nas mesas." }
+        ]
+      },
+      {
+        titulo: "Drinks e Bebidas",
+        itens: [
+          { nome: "Caipirinha de Pinga", preco: "R$ 22,00", desc: "Velho Barreiro ou 51, açúcar e gelo." },
+          { nome: "Caipirinha de Vodka", preco: "R$ 30,00", desc: "" },
+          { nome: "Caipirinha de Saquê", preco: "R$ 30,00", desc: "" },
+          { nome: "Espanhola", preco: "R$ 28,00", desc: "Leite condensado, vinho suave, abacaxi ou morango e gelo." },
+          { nome: "Destilados — Dose", preco: "R$ 8,00", desc: "" },
+          { nome: "Cachaças — Dose", preco: "R$ 8,00", desc: "" },
+          { nome: "Vinho da Casa", preco: "R$ 10,00", desc: "" },
+          { nome: "Campari", preco: "R$ 15,00", desc: "" }
+        ]
+      }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const navContainer = document.getElementById('category-nav');
+      const sectionsContainer = document.getElementById('menu-sections');
+
+      cardapioData.forEach((categoria, index) => {
+        const catId = `cat-${index}`;
+
+        // Nav link
+        const link = document.createElement('a');
+        link.href = `#${catId}`;
+        link.innerText = categoria.titulo;
+        link.className = 'category-link';
+        navContainer.appendChild(link);
+
+        // Section
+        const section = document.createElement('section');
+        section.id = catId;
+
+        let headerExtra = '';
+        if (categoria.delivery) {
+          headerExtra = `<span class="badge-delivery ml-3">Só Delivery</span>`;
+        }
+
+        section.innerHTML = `<h2 class="text-3xl font-serif text-amber-900 mb-8 border-b pb-4 flex items-center">${categoria.titulo}${headerExtra}</h2>`;
+
+        const grid = document.createElement('div');
+        grid.className = 'grid gap-6';
+
+        categoria.itens.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'flex justify-between items-start group border-b border-stone-100 pb-5';
+
+          let badges = '';
+          if (item.destaque) badges += `<span class="badge-destaque mr-2">Destaque</span>`;
+          if (item.delivery) badges += `<span class="badge-delivery mr-2">Só Delivery</span>`;
+          if (item.encomenda) badges += `<span class="badge-encomenda mr-2">Encomenda</span>`;
+
+          itemDiv.innerHTML = `
+            <div class="flex-1 pr-4">
+              ${badges ? `<div class="mb-2">${badges}</div>` : ''}
+              <div class="flex justify-between items-baseline mb-1 gap-4">
+                <h4 class="text-base font-semibold group-hover:text-amber-700 transition leading-snug">${item.nome}</h4>
+                <span class="font-bold text-amber-800 whitespace-nowrap text-sm">${item.preco}</span>
+              </div>
+              ${item.desc ? `<p class="text-stone-500 text-sm italic">${item.desc}</p>` : ''}
+            </div>
+          `;
+          grid.appendChild(itemDiv);
+        });
+
+        section.appendChild(grid);
+        sectionsContainer.appendChild(section);
+      });
+
+      // Intersection Observer para highlight do menu lateral
+      const sections = document.querySelectorAll('#menu-sections section');
+      const links = document.querySelectorAll('.category-link');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            links.forEach(l => l.classList.remove('active'));
+            const active = document.querySelector(`a[href="#${entry.target.id}"]`);
+            if (active) active.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      sections.forEach(s => observer.observe(s));
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO LIST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fbfdf2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #540909;
+        }
+        #txt {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #taskInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #540909;
+            color: #fff;
+        }
+        button:active {
+            background-color: #300202;
+            color: #fff;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>TO DO LIST</h1>
+    <div id="txt">
+        <input type="text" id="taskInput" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+    
+    <script src="todo.js"></script>
+</body>
+</html>

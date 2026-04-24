@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: linear-gradient(to right, #f0f0f0, #d0d0d0);
+    }
+    h1 {
+        color: #333;
+    }
+    p {
+        font-size: 18px;
+        color: #0c0101;
+    }
+    input[type="radio"] {
+        margin: 10px 0;
+    }
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #000000;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #ffffff;
+       color: black;
+    }
+    #result, #result2, #result3, #result4 {
+        margin-top: 10px;
+        font-weight: bold;
+        color: crimson;
+    }
+    #qst1, #qst2, #qst3 {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+
+
+    </style>
+</head>
+<body>
+   <div id="qst1">
+    <h1>QUIZ</h1>
+    <p>Que ano o corinthians foi fundado?</p>
+   <input type="radio" name="question1" id="sel1">1910<br>
+    <input type="radio" name="question1" id="sel2">1915<br>
+    <input type="radio" name="question1" id="sel3">1920<br>
+    <input type="radio" name="question1" id="sel4">1925<br>
+   <button onclick="checkAnswers()">Verificar Respostas</button>
+   <div id="result"></div>
+   </div>
+
+
+   <div id="qst2">
+   <p>qual o nome do time?</p>
+   <input type="radio" name="question2" id="sel5">Esporte clube Corinthians Paulista<br>
+    <input type="radio" name="question2" id="sel6">Sport club Corinthians Paulista<br>
+    <input type="radio" name="question2" id="sel7">Corinthians Futebol Clube<br>
+    <input type="radio" name="question2" id="sel8">Corinthians Sport Club paulista<br>
+    <button onclick="conferir()">Verificar Respostas</button>
+    <div id="result2"></div>
+   </div>
+
+    
+   <div id="qst3">
+   <p>Em qual dessas competições o corinthians é o maior vencedor?</p>
+    <input type="radio" name="question3" id="sel9">Campeonato Brasileiro<br>
+    <input type="radio" name="question3" id="sel10">Copa do Brasil<br>
+    <input type="radio" name="question3" id="sel11">Campeonato Paulista<br>
+    <input type="radio" name="question3" id="sel12">Libertadores da América<br>
+    <button onclick="chamar()">Verificar Respostas</button>
+    <div id="result3"></div>
+    </div>
+
+   <p> <button onclick="finalizar()">conferir Quiz</button> </p>
+    <div id="result4"></div>
+
+
+
+<script>
+const sel1 = document.getElementById('sel1');
+const sel2 = document.getElementById('sel2');
+const sel3 = document.getElementById('sel3');
+const sel4 = document.getElementById('sel4');
+const result = document.getElementById('result');
+const qst1 = document.getElementById('qst1');
+
+
+const sel5 = document.getElementById('sel5');
+const sel6 = document.getElementById('sel6');
+const sel7 = document.getElementById('sel7');
+const sel8 = document.getElementById('sel8');
+const result2 = document.getElementById('result2');
+
+const sel9 = document.getElementById('sel9');
+const sel10 = document.getElementById('sel10');
+const sel11 = document.getElementById('sel11');
+const sel12 = document.getElementById('sel12');
+const result3 = document.getElementById('result3');
+
+
+const result4 = document.getElementById('result4');
+
+function checkAnswers() {
+    if (sel1.checked) {
+        result.textContent = 'Resposta correta!';
+        qst1.p
+    } else {
+        result.textContent = 'Resposta incorreta. Tente novamente!';
+    }   
+}
+    
+    
+    
+function conferir() {
+    if (sel6.checked) {
+        result2.textContent = 'Resposta correta!';
+    } else {
+        result2.textContent = 'Resposta incorreta. Tente novamente!';
+    }
+ 
+}
+
+function chamar() {
+    if (sel11.checked) {
+        result3.textContent = 'Resposta correta!';
+    } else {
+        result3.textContent = 'Resposta incorreta. Tente novamente!';
+    }
+}
+
+function finalizar() {
+    if (sel1.checked && sel6.checked && sel11.checked) {
+        result4.textContent = 'Parabéns! Você acertou todas as perguntas, Vai corinthians!';
+    } else {
+        result4.textContent = 'Algumas respostas estão incorretas. Tente novamente!';
+    }
+}
+
+</script>
+
+
+</body>
+</html>

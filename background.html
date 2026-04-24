@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: s-resize;
+        }
+    </style>
+</head>
+<body>
+    <label for="horario">que período é?</label>
+    <select id="meuselect">
+    <option value="dia">dia</option>
+    <option value="tarde">tarde</option>
+    <option value="noite">noite</option>
+    </select>
+    <p></p>
+    <button id="confirmar">confirmar</button>
+
+
+
+    <script>
+        let select = document.getElementById("meuselect");
+        let botao = document.getElementById("confirmar");
+
+        botao.addEventListener("click", verificarHorario);
+
+        function verificarHorario() {
+            let valorSelecionado = select.value;
+
+            if (valorSelecionado === "dia") {
+                alert("Bom dia!");
+                document.body.style.backgroundColor = "#f0edab";
+            } else if (valorSelecionado === "tarde") {
+                alert("Boa tarde!");
+                document.body.style.backgroundColor = "orange";
+            } else if (valorSelecionado === "noite") {
+                alert("Boa noite!");
+                document.body.style.backgroundColor = "darkblue";
+                document.body.style.color = "white";
+            }
+        }
+
+    </script>
+</body>
+</html>
